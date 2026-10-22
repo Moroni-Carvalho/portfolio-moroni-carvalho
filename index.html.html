@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Layouts | Moroni Carvalho</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        saas: {
+                            bg: '#0B0F19',
+                            card: '#1A2332',
+                            primary: '#6366F1',
+                            secondary: '#8B5CF6'
+                        },
+                        dataapp: {
+                            bg: '#F3F4F6',
+                            sidebar: '#FFFFFF',
+                            card: '#FFFFFF',
+                            primary: '#FF4B4B' // Streamlit-like red
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth transitions for layout switching */
+        .layout-container {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .layout-container.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark-scroll::-webkit-scrollbar-thumb { background: #334155; }
+    </style>
+</head>
+<body class="bg-gray-100 overflow-x-hidden">
+
+    <!-- Global Navigation (Fixed Top) -->
+    <nav class="fixed top-0 w-full bg-white border-b border-gray-200 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="font-bold text-gray-800 text-lg">Seletor de Layout</div>
+                <div class="flex space-x-2 md:space-x-4 overflow-x-auto">
+                    <button onclick="switchLayout('notion')" id="btn-notion" class="nav-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-900 text-white">1. Documental</button>
+                    <button onclick="switchLayout('saas')" id="btn-saas" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">2. SaaS / Startup</button>
+                    <button onclick="switchLayout('dataapp')" id="btn-dataapp" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">3. Data App</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         LAYOUT 1: DOCUMENTAL (NOTION STYLE)
+         ========================================== -->
+    <div id="layout-notion" class="layout-container active pt-16 min-h-screen bg-white text-gray-900">
+        <div class="max-w-3xl mx-auto py-20 px-6">
+            
+            <!-- Hero / Profile -->
+            <header class="mb-16">
+                <h1 class="text-5xl font-bold tracking-tight mb-4 text-black">Moroni Carvalho</h1>
+                <p class="text-xl text-gray-500 font-serif mb-6">Data Scientist & Analytics Engineer</p>
+                <div class="prose text-gray-700 leading-relaxed">
+                    <p>De Business Intelligence corporativo para Ciência de Dados. Especializado na construção de esteiras analíticas, modelos preditivos e integrações em nuvem. Histórico de otimização de processos na Raízen/Shell Box, transformando dados brutos em decisões estratégicas.</p>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-2 text-sm text-gray-600">
+                    <span class="bg-gray-100 px-3 py-1 rounded">🎓 Poli USP (MBA Data Science)</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded">🎓 UNIVESP (Ciência de Dados)</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded">💻 Python & SQL</span>
+                </div>
+            </header>
+
+            <!-- Projects -->
+            <section class="mb-16 border-t border-gray-100 pt-16">
+                <h2 class="text-2xl font-bold mb-8 text-black">Projetos em Destaque</h2>
+                
+                <div class="space-y-12">
+                    <!-- Project 1 -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Detecção Preditiva de Fraudes em Transações</h3>
+                        <div class="flex gap-2 mb-4">
+                            <span class="text-xs font-semibold bg-gray-100 px-2 py-1 rounded">XGBoost</span>
+                            <span class="text-xs font-semibold bg-gray-100 px-2 py-1 rounded">SMOTE</span>
+                        </div>
+                        <div class="pl-4 border-l-2 border-gray-200 space-y-3 text-gray-700">
+                            <p><strong>Situação:</strong> Perdas financeiras recorrentes devido a anomalias sutis no volume transacional.</p>
+                            <p><strong>Tarefa:</strong> Desenvolver um modelo preditivo robusto para identificar anomalias em dados altamente desbalanceados.</p>
+                            <p><strong>Ação:</strong> Implementação de modelo XGBoost aliado a técnicas de oversampling (SMOTE) e análise de explicabilidade via SHAP values.</p>
+                            <p><strong>Resultado:</strong> <span class="bg-yellow-100 px-1">AUC-ROC de 0.98</span>, redução de 60% na necessidade de revisão manual de logs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Agente de IA Generativa & RAG</h3>
+                        <div class="flex gap-2 mb-4">
+                            <span class="text-xs font-semibold bg-gray-100 px-2 py-1 rounded">LangChain</span>
+                            <span class="text-xs font-semibold bg-gray-100 px-2 py-1 rounded">n8n</span>
+                        </div>
+                        <div class="pl-4 border-l-2 border-gray-200 space-y-3 text-gray-700">
+                            <p><strong>Situação:</strong> Sobrecarga do time de suporte N2 com dúvidas operacionais já mapeadas em documentações.</p>
+                            <p><strong>Tarefa:</strong> Criar um agente autônomo capaz de consultar a base de conhecimento e triar chamados.</p>
+                            <p><strong>Ação:</strong> Arquitetura Retrieval-Augmented Generation (RAG) utilizando LangChain, banco vetorial Qdrant e orquestração via n8n.</p>
+                            <p><strong>Resultado:</strong> Resolução automática de <span class="bg-yellow-100 px-1">45% dos chamados</span> no primeiro contato, melhorando o SLA.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard -->
+            <section class="border-t border-gray-100 pt-16">
+                <h2 class="text-2xl font-bold mb-2 text-black">Telemetria da Plataforma</h2>
+                <p class="text-gray-500 mb-8 font-serif">Monitoramento de tráfego próprio construído para este portfólio.</p>
+                
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Acessos Diários</h4>
+                            <canvas id="notion-chart-1"></canvas>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Cliques por Projeto</h4>
+                            <canvas id="notion-chart-2"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+
+    <!-- ==========================================
+         LAYOUT 2: SAAS / STARTUP (DARK MODE)
+         ========================================== -->
+    <div id="layout-saas" class="layout-container pt-16 min-h-screen bg-saas-bg text-white dark-scroll">
+        
+        <!-- Hero Section -->
+        <div class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 relative z-10 text-center">
+                <div class="inline-block mb-4 px-3 py-1 rounded-full border border-saas-primary/30 bg-saas-primary/10 text-saas-primary text-sm font-medium">
+                    Disponível para Oportunidades
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+                    Dados transformados em <br>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Decisões Estratégicas</span>
+                </h1>
+                <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
+                    Olá, sou <strong class="text-white">Moroni Carvalho</strong>. Cientista de Dados especializado na construção de esteiras analíticas, modelos preditivos e ecossistemas em nuvem. Da extração ao deploy.
+                </p>
+                
+                <div class="mt-10 flex justify-center gap-4">
+                    <button class="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 font-semibold shadow-lg shadow-purple-500/30 transition-all">
+                        Ver Projetos
+                    </button>
+                    <button class="px-8 py-3 rounded-lg bg-saas-card border border-gray-700 hover:border-gray-500 font-semibold transition-all">
+                        Contato
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            
+            <!-- Cards Section -->
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-8 border-l-4 border-saas-primary pl-4">Projetos Data Science</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Card 1 -->
+                    <div class="bg-saas-card rounded-xl p-8 border border-gray-800 hover:border-saas-primary/50 transition-colors group">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">Detecção de Fraudes</h3>
+                        <div class="space-y-4 text-gray-400 text-sm">
+                            <p><strong class="text-gray-300">Situação:</strong> Perdas com anomalias não detectadas.</p>
+                            <p><strong class="text-gray-300">Tarefa:</strong> Modelo para dados desbalanceados.</p>
+                            <p><strong class="text-gray-300">Ação:</strong> XGBoost + SMOTE + SHAP Values.</p>
+                            <p><strong class="text-gray-300">Resultado:</strong> AUC-ROC 0.98. -60% de revisão manual.</p>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-gray-800 flex gap-2">
+                            <span class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">Python</span>
+                            <span class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">XGBoost</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-saas-card rounded-xl p-8 border border-gray-800 hover:border-purple-500/50 transition-colors group">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 group-hover:text-purple-400 transition-colors">Agente IA (RAG)</h3>
+                        <div class="space-y-4 text-gray-400 text-sm">
+                            <p><strong class="text-gray-300">Situação:</strong> Sobrecarga N2 com dúvidas repetitivas.</p>
+                            <p><strong class="text-gray-300">Tarefa:</strong> Agente autônomo baseado em contexto.</p>
+                            <p><strong class="text-gray-300">Ação:</strong> LangChain + n8n + Banco Vetorial (Qdrant).</p>
+                            <p><strong class="text-gray-300">Resultado:</strong> 45% de resolução no primeiro contato.</p>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-gray-800 flex gap-2">
+                            <span class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">LLMs</span>
+                            <span class="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">LangChain</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SaaS Dashboard -->
+            <div class="bg-saas-card rounded-xl border border-gray-800 p-8 shadow-2xl">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-2xl font-bold">Live Telemetry</h2>
+                    <span class="flex items-center text-sm text-green-400">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> Sistema Online
+                    </span>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-[#0f1523] p-4 rounded-lg border border-gray-800 h-72">
+                        <canvas id="saas-chart-1"></canvas>
+                    </div>
+                    <div class="bg-[#0f1523] p-4 rounded-lg border border-gray-800 h-72">
+                        <canvas id="saas-chart-2"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ==========================================
+         LAYOUT 3: DATA APP (STREAMLIT STYLE)
+         ========================================== -->
+    <div id="layout-dataapp" class="layout-container pt-16 h-screen bg-dataapp-bg font-sans flex overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside class="w-72 bg-dataapp-sidebar border-r border-gray-200 hidden md:flex flex-col h-full overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="w-16 h-16 bg-gray-200 rounded-full mb-4 flex items-center justify-center text-xl font-bold text-gray-500">MC</div>
+                <h2 class="font-bold text-lg text-gray-800">Moroni Carvalho</h2>
+                <p class="text-sm text-gray-500">Data Scientist</p>
+                
+                <div class="mt-4 space-y-2 text-xs text-gray-600">
+                    <div class="flex justify-between"><span>Poli USP</span> <span>2024-2026</span></div>
+                    <div class="flex justify-between"><span>UNIVESP</span> <span>2025-2028</span></div>
+                </div>
+            </div>
+            
+            <nav class="p-4 space-y-1 flex-1">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-4">Navegação</p>
+                <a href="#" class="block px-3 py-2 rounded-md bg-red-50 text-dataapp-primary font-medium text-sm border-l-4 border-dataapp-primary">📊 Overview</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-gray-50 font-medium text-sm border-l-4 border-transparent">🤖 Modelos (Projetos)</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-gray-600 hover:bg-gray-50 font-medium text-sm border-l-4 border-transparent">📈 Telemetria</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-6 md:p-10">
+            
+            <header class="mb-8 border-b border-gray-200 pb-4">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Painel de Projetos Analíticos</h1>
+                <p class="text-gray-600">Explore os modelos preditivos e métricas de desempenho.</p>
+            </header>
+
+            <!-- Data App Metric Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 border-t-4 border-t-blue-500">
+                    <p class="text-sm text-gray-500 mb-1">Stack Principal</p>
+                    <p class="text-xl font-bold text-gray-800">Python + SQL</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 border-t-4 border-t-green-500">
+                    <p class="text-sm text-gray-500 mb-1">Redução Tempo (Raízen)</p>
+                    <p class="text-xl font-bold text-gray-800">95%</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 border-t-4 border-t-purple-500">
+                    <p class="text-sm text-gray-500 mb-1">Modelos Implantados</p>
+                    <p class="text-xl font-bold text-gray-800">2</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 border-t-4 border-t-dataapp-primary">
+                    <p class="text-sm text-gray-500 mb-1">Status</p>
+                    <p class="text-xl font-bold text-green-600">Online</p>
+                </div>
+            </div>
+
+            <!-- Layout Tabs Simulation -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-8 overflow-hidden">
+                <div class="flex border-b border-gray-200 bg-gray-50 px-4 pt-4 space-x-4">
+                    <div class="px-4 py-2 border-b-2 border-dataapp-primary text-dataapp-primary font-medium text-sm">Detecção de Fraudes</div>
+                    <div class="px-4 py-2 border-b-2 border-transparent text-gray-500 font-medium text-sm">Agente RAG</div>
+                </div>
+                
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Pipeline do Modelo (XGBoost)</h3>
+                            <div class="bg-gray-50 p-4 rounded border font-mono text-sm text-gray-700">
+                                > Carregando dataset [Anomalias_Financeiras]...<br>
+                                > Aplicando SMOTE (balanceamento)...<br>
+                                > Treinando XGBoostClassifier...<br>
+                                > Calculando SHAP values...<br><br>
+                                <span class="text-green-600">RESULTADO:</span> AUC-ROC = 0.98, Redução de revisão = 60%
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Parâmetros (Simulados)</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Learning Rate</label>
+                                    <input type="range" class="w-full" disabled value="30">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600">Max Depth</label>
+                                    <input type="range" class="w-full" disabled value="70">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-gray-800 font-bold mb-4">Série Temporal de Acessos</h3>
+                    <div class="h-64"><canvas id="dataapp-chart-1"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-gray-800 font-bold mb-4">Engajamento por Categoria</h3>
+                    <div class="h-64"><canvas id="dataapp-chart-2"></canvas></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // Global variables to store chart instances so we can destroy/recreate them
+        let charts = {};
+
+        // Mock Data for charts
+        const mockLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+        const mockLineData = [12, 19, 15, 25, 22, 30, 28];
+        const mockBarLabels = ['Fraudes (XGBoost)', 'RAG (LLM)', 'Sobre Mim'];
+        const mockBarData = [45, 60, 25];
+
+        function switchLayout(layoutId) {
+            // Update buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-gray-900', 'text-white');
+                btn.classList.add('text-gray-600');
+            });
+            const activeBtn = document.getElementById('btn-' + layoutId);
+            activeBtn.classList.remove('text-gray-600', 'hover:bg-gray-100');
+            activeBtn.classList.add('bg-gray-900', 'text-white');
+
+            // Hide all layouts
+            document.querySelectorAll('.layout-container').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show selected layout
+            document.getElementById('layout-' + layoutId).classList.add('active');
+
+            // Render charts specifically for the active layout to ensure correct canvas sizing
+            renderChartsForLayout(layoutId);
+        }
+
+        function createLineChart(ctxId, colorLine, colorBg, textColor) {
+            const ctx = document.getElementById(ctxId);
+            if (!ctx) return;
+            
+            if (charts[ctxId]) charts[ctxId].destroy();
+
+            charts[ctxId] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: mockLabels,
+                    datasets: [{
+                        label: 'Visualizações',
+                        data: mockLineData,
+                        borderColor: colorLine,
+                        backgroundColor: colorBg,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: textColor }, grid: { color: textColor + '20' } },
+                        y: { ticks: { color: textColor }, grid: { color: textColor + '20' } }
+                    }
+                }
+            });
+        }
+
+        function createBarChart(ctxId, colorBar, textColor) {
+            const ctx = document.getElementById(ctxId);
+            if (!ctx) return;
+
+            if (charts[ctxId]) charts[ctxId].destroy();
+
+            charts[ctxId] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: mockBarLabels,
+                    datasets: [{
+                        label: 'Cliques',
+                        data: mockBarData,
+                        backgroundColor: colorBar,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: textColor }, grid: { display: false } },
+                        y: { ticks: { color: textColor }, grid: { color: textColor + '20' } }
+                    }
+                }
+            });
+        }
+
+        function renderChartsForLayout(layout) {
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            if (layout === 'notion') {
+                createLineChart('notion-chart-1', '#111827', '#f3f4f6', '#6b7280');
+                createBarChart('notion-chart-2', '#4b5563', '#6b7280');
+            } 
+            else if (layout === 'saas') {
+                createLineChart('saas-chart-1', '#8B5CF6', 'rgba(139, 92, 246, 0.1)', '#9ca3af');
+                createBarChart('saas-chart-2', '#3b82f6', '#9ca3af');
+            } 
+            else if (layout === 'dataapp') {
+                createLineChart('dataapp-chart-1', '#FF4B4B', 'rgba(255, 75, 75, 0.1)', '#6b7280');
+                createBarChart('dataapp-chart-2', '#3b82f6', '#6b7280');
+            }
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            switchLayout('notion'); // Set default
+        };
+
+    </script>
+</body>
+</html>
